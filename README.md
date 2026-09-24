@@ -1,5 +1,7 @@
 # Exoplanet Atmospheric Model Intercomparison
 
+*Will Hannah · MPhys project · Supervised by Dr. Éric Hébrard, University of Exeter*
+
 The study of exoplanet atmospheres relies heavily on modelling to interpret
 spectra obtained from observations. However, models from the literature often
 use different assumptions and chemical networks, leading to discrepancies in
