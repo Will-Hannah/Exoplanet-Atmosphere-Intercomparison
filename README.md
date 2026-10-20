@@ -19,6 +19,8 @@ structures and spectra.
 This repository contains the model inputs, conversion scripts, analysis
 scripts and results used in the intercomparison.
 
+I have also started work with the PHOTOCHEM model (yet to be added to this repository)
+
 ## Repository Structure
 
 ```
