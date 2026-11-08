@@ -1,0 +1,53 @@
+&UNITS
+/
+
+&PARAM
+/
+
+&EOS
+gamma = 0.
+/
+
+&GRID
+ndepth = 1
+pmin = 100
+pmax = 100
+teff = 2000.
+mixing = f
+/
+
+&CHEMISTRY
+chem  = 'neq'
+fAin = 'start_conditions.ncdf'
+init_eq = f
+fcoeffnine = 'tsai2025/coeff9_NASA_sc.dat'
+fAeqout  = 'TEST4a_atmo_chem_eq.ncdf'
+fAneqout = 'TEST4a_atmo_chem_neq.ncdf'
+ele_xfactor(2) = 1.047120419
+ele_xfactor(3) = 1.264902128
+ele_xfactor(5) = 1.390240512
+print_chem = t
+/
+
+&CHEM_NEQ
+dir_neq = 'tsai2025/'
+nfile = 6
+nmol_neq = 91
+mod_jac = 100
+mod_rate = 100
+tmin = 1e2
+dtmax = 1e10
+tmax = 1e20
+/
+
+&RADTRANS
+/
+
+&OPACITY
+/
+
+&SOLVER
+/
+
+&CONVECTION
+/
