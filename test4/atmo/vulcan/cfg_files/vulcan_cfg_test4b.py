@@ -1,0 +1,174 @@
+# ============================================================================= 
+# Configuration file of VULCAN:  
+# ============================================================================= 
+
+# ====== Setting up the elements included in the network ======
+atom_list = ['H', 'O', 'C', 'N', 'S', 'He'] # the elements included in the network
+# ====== Setting up paths and filenames for the input and output files  ======
+# input:
+network = 'thermo/SNCHO_photo_network_2025.txt'
+use_lowT_limit_rates = False
+gibbs_text = 'thermo/gibbs_text.txt' # (all the nasa9 files must be placed in the folder: thermo/NASA9/)
+cross_folder = 'thermo/photo_cross/'
+com_file = 'thermo/all_compose.txt'
+atm_file = 'atm/tp_tests1_2_6.txt' # TP and Kzz (optional) file
+sflux_file = 'atm/stellar_flux/sflux-HD189_Moses11.txt' # sflux-HD189_B2020.txt This is the flux density at the stellar surface
+top_BC_flux_file = 'atm/BC_top.txt' # the file for the top boundary conditions
+bot_BC_flux_file = 'atm/BC_bot.txt' # the file for the lower boundary conditions
+vul_ini = 'output/HD189_test4b_SNCHO.vul' # the file to initialize the abundances for ini_mix = 'vulcan_ini'
+# output:
+output_dir = 'output/'
+plot_dir = 'plot/'
+movie_dir = 'plot/movie/'
+out_name =  'HD189_test4b_SNCHO.vul' # output file name
+
+# ====== Setting up the elemental abundance ======
+use_solar = False # True: using the solar abundance from Table 10. K.Lodders 2009; False: using the customized elemental abundance. 
+# customized elemental abundance (only read when use_solar = False)
+O_H = 5.7544E-04 #*(0.85) #*(0.793)  
+C_H = 3.1623E-04  
+N_H = 7.2444E-05
+S_H = 1.4454E-05
+He_H = 9.5500E-02
+ini_mix = 'const_mix' # Options: 'EQ', 'const_mix', 'vulcan_ini', 'table' (for 'vulcan_ini, the T-P grids have to be exactly the same)
+fastchem_met_scale = 1. # scaling factor for other elements in fastchem (e.g., if fastchem_met_scale = 0.1, other elements such as Si and Mg will take 0.1 solar values)
+
+# Initialsing uniform (constant with pressure) mixing ratios (only reads when ini_mix = const_mix)
+const_mix = {'H2': 0.83158, 'He': 0.16628, 'C': 6.6521E-4, 'O': 1.3308E-3, 'N': 1.2049E-4, 'S': 2.4039E-5}
+
+# ====== Setting up photochemistry ======
+use_photo = False
+# astronomy input
+r_star = 0.805 # stellar radius in solar radius
+Rp = 1.138*7.1492E9 # Planetary radius (cm) (for computing gravity)
+orbit_radius = 0.03142 # planet-star distance in A.U.
+sl_angle = 60 /180.*3.14159 # the zenith angle of the star in degree (usually 58 deg for the dayside average)
+f_diurnal = 1. # to account for the diurnal average of solar flux (i.e. 0.5 for Earth; 1 for tidally-locked planets) 
+scat_sp = ['H2', 'He'] # the bulk gases that contribute to Rayleigh scattering
+T_cross_sp = [] # warning: slower start! available atm: 'CO2','H2O','NH3', 'SH','H2S','SO2', 'S2', 'COS', 'CS2'
+
+edd = 0.5 # the Eddington coefficient 
+dbin1 = 0.1  # the uniform bin width < dbin_12trans (nm)
+dbin2 = 2.   # the uniform bin width > dbin_12trans (nm)
+dbin_12trans = 240. # the wavelength switching from dbin1 to dbin2 (nm)
+
+# the frequency to update the actinic flux and optical depth
+ini_update_photo_frq = 100
+final_update_photo_frq = 5
+
+# ====== Setting up ionchemistry ======
+use_ion = False
+if use_photo == False and use_ion == True:
+    print ('Warning: use_ion = True but use_photo = False')
+# photoionization needs to run together with photochemistry
+
+
+# ====== Setting up parameters for the atmosphere ======
+atm_base = 'H2' #Options: 'H2', 'N2', 'O2', 'CO2 -- the bulk gas of the atmosphere: changes the molecular diffsion, thermal diffusion factor, and settling velocity
+rocky = False # for the surface gravity
+nz = 10  # number of vertical layers
+P_b = 1.0001e3  # pressure at the bottom (dyne/cm^2)
+P_t = 0.9999e3 # pressure at the top (dyne/cm^2)
+use_Kzz = False
+use_moldiff = False
+use_vm_mol = False # use upwind scheme for molecular diffusion -- under testing
+use_vz = False
+atm_type = 'isothermal'  # Options: 'isothermal', 'analytical', 'file', or 'vulcan_ini' 'table'
+Kzz_prof = 'const' # Options: 'const','file' or 'Pfunc' (Kzz increased with P^-0.4)
+K_max = 1e5        # for Kzz_prof = 'Pfunc'
+K_p_lev = 0.1      # for Kzz_prof = 'Pfunc'
+vz_prof = 'const'  # Options: 'const' or 'file'
+gs = 2140.         # surface gravity (cm/s^2)  (HD189:2140  HD209:936)
+Tiso = 800 # only read when atm_type = 'isothermal'
+# setting the parameters for the analytical T-P from (126)in Heng et al. 2014. Only reads when atm_type = 'analytical' 
+# T_int, T_irr, ka_L, ka_S, beta_S, beta_L
+para_warm = [120., 1500., 0.1, 0.02, 1., 1.]
+para_anaTP = para_warm
+const_Kzz = 1.E9 # (cm^2/s) Only reads when use_Kzz = True and Kzz_prof = 'const'
+const_vz = 0 # (cm/s) Only reads when use_vz = True and vz_prof = 'const'
+
+# frequency for updating dz and dzi due to change of mu
+update_frq = 100 
+
+# ====== Setting up the boundary conditions ======
+# Boundary Conditions:
+use_topflux = False
+use_botflux = False
+use_fix_sp_bot = {} # fixed mixing ratios at the lower boundary
+diff_esc = [] # species for diffusion-limit escape at TOA
+max_flux = 1e13  # upper limit for the diffusion-limit fluxes
+
+# ====== Reactions to be switched off  ======
+remove_list = [] # in pairs e.g. [1,2]
+
+# == Condensation ======
+use_relax = []
+use_condense = False
+use_settling = False
+start_conden_time = 0
+stop_conden_time = 1e5 # after this time to fix the condensable species
+condense_sp = []     
+non_gas_sp = []
+r_p = {'H2O_l_s': 5e-3}  # particle radius in cm (1e-4 = 1 micron)
+rho_p = {'H2O_l_s': 1} # particle density in g cm^-3
+fix_species = []      # fixed the condensable species after condensation-evapoation EQ has reached  
+fix_species_time = 0  
+fix_species_from_coldtrap_lev = True
+humidity = 1.
+
+# ====== steady state check ======
+st_factor = 0.5
+conv_step = 500
+
+# ====== Setting up numerical parameters for the ODE solver ====== 
+ode_solver = 'Ros2' # case sensitive
+use_print_prog = True
+use_print_delta = False
+print_prog_num = 500  # print the progress every x steps 
+dttry = 1.E-15
+trun_min = 1e2
+runtime = 1.E15
+dt_min = 1.E-17
+dt_max = runtime*1e-3
+dt_var_max = 2.
+dt_var_min = 0.5
+count_min = 120
+count_max = int(1E4)
+atol = 1.E-1 # Try decreasing this if the solutions are not stable
+mtol = 1.E-22
+mtol_conv = 1.E-20
+pos_cut = 0
+nega_cut = -1.
+loss_eps = 1e-1
+yconv_cri = 0.01 # for checking steady-state
+slope_cri = 1.e-4
+yconv_min = 0.1
+flux_cri = 0.1
+flux_atol = 1. # the tol for actinc flux (# photons cm-2 s-1 nm-1)
+conver_ignore = [] # added 2023. to get rid off non-convergent species, e.g. HC3N without sinks 
+
+# ====== Setting up numerical parameters for Ros2 ODE solver ====== 
+rtol = 0.05        # relative tolerence for adjusting the stepsize 
+post_conden_rtol = 0.1 # switched to this value after fix_species_time
+use_adapt_rtol = False
+
+# ====== Setting up for ouwtput and plotting ======
+# plotting:
+plot_TP = False
+use_live_plot = True
+use_live_flux = False
+use_plot_end = False
+use_plot_evo = True
+use_save_movie = False
+use_flux_movie = False
+plot_height = False
+use_PIL = True 
+live_plot_frq = 10
+save_movie_rate = live_plot_frq
+y_time_freq = 1  #  storing data for every 'y_time_freq' step
+plot_spec = ['H2O', 'H', 'CH4', 'CO', 'CO2', 'C2H2', 'HCN', 'NH3', 'SH', 'H2S', 'S2']
+# output:
+output_humanread = False
+use_shark = False
+save_evolution = True   # save the evolution of chemistry (y_time and t_time) for every save_evo_frq step
+save_evo_frq = 1
