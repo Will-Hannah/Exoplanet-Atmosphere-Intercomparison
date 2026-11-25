@@ -1,0 +1,68 @@
+&UNITS
+/
+
+&PARAM 
+Debug  = 0
+fout = 'hd209b_pt_eq.ncdf'
+/
+
+&EOS gamma = 0./
+
+&GRID 
+logg   = 2.98
+teff   = 100.
+tinit  = 1000.
+isothermal = f
+ndepth = 99
+pmin = 1E-5
+pmax = 1E2
+Rp = 1.257
+
+taumin = 2E-6
+taumax = 5E4
+check_tau = t
+mod_tau = 5
+
+corr_k = t
+/
+
+&CHEMISTRY 
+chem  = 'eq' 
+fAin = 'chem_dummy.ncdf'
+fAeqout = 'chem_hd209b_pt_eq.ncdf'
+print_chem = f
+/
+
+&CHEM_NEQ
+/
+
+&RADTRANS nrays = 16
+scatter = t
+irrad = t
+firad='HD209.ncdf' 
+rstar = 1.118 
+rorbit = 0.047
+fred = 0.5
+ftau_top = 1
+murad = 0.5
+/
+
+&CHEM_RELAX
+/
+
+&OPACITY 
+nkap =12
+/
+
+&SOLVER 
+solve_hydro  = t
+solve_energy = t
+minstep      = 1.0E-1
+maxstep      = 9.0E-1
+accuracy     = 1.0E-3
+psurf        = 1E-5
+print_err = f
+/
+ 
+&CONVECTION alpha = 1.5/
+

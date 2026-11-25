@@ -1,0 +1,64 @@
+! Namelist file for the tutorial chem_kin: calculating chemical kinetics abundances with a read in PT profile
+
+&UNITS
+/
+
+&PARAM 
+Debug  = 0
+fin = 'hd209b_pt_eq.ncdf'
+/
+
+&EOS gamma = 0./
+
+&GRID 
+logg   = 2.98
+ndepth = 99
+mixing = t
+kzzcst = 1e9
+
+corr_k = t
+/
+
+&CHEMISTRY 
+chem  = 'neq' 
+fAin = 'tsai2025/chem_tsai2025.ncdf'
+!fAin = 'tsai2021_pho2021/chem_tsai2021(+53).ncdf'
+fcoeffnine = 'tsai2025/coeff9_NASA_sc.dat'
+fAeqout  = 'hd209b_chem_eq.ncdf'
+fAneqout = 'hd209b_chem_neq.ncdf'
+mdh = 0.
+init_eq = t
+print_chem = t
+/
+
+&CHEM_NEQ
+dir_neq = 'tsai2025/'
+nmol_neq = 91
+nfile = 6
+
+tmax = 1e12
+rate_limiter = t
+
+photochem= f
+/
+
+&RADTRANS
+rstar = 1.118 
+rorbit = 0.047
+fred = 0.5
+murad = 0.5
+/
+
+
+&OPACITY 
+nkap = 0
+/
+
+&SOLVER 
+solve_hydro  = f
+solve_energy = f
+/
+ 
+&CONVECTION 
+/
+
