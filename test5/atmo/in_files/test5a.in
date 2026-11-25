@@ -1,0 +1,48 @@
+&UNITS
+/
+
+&PARAM
+debug  = 1
+/
+
+&EOS
+gamma = 0.
+/
+
+&GRID 
+ndepth = 1
+pmin = 1.
+pmax = 1.
+teff = 800.
+/
+
+&CHEMISTRY 
+chem  = 'neq' 
+fAin = 'chem_dummy_test5.ncdf'
+fAneqout = 'chem/chem_test5a.ncdf'
+fcoeffnine = 'chem/test5a/coeff_NASA9_ISSI_test5.dat'
+print_chem = t
+init_eq = f
+/
+
+&CHEM_NEQ
+dir_neq = 'chem/test5a/'
+nfile = 1
+nmol_neq = 4
+mod_jac = 100
+mod_rate = 1
+tmin = 1e4
+tmax = 1e20
+/
+
+&RADTRANS 
+/
+
+&OPACITY
+/
+
+&SOLVER 
+/
+ 
+&CONVECTION 
+/
