@@ -18,7 +18,7 @@ mixing = f
 
 &CHEMISTRY
 chem  = 'neq'
-fAin = 'start_conditions.ncdf'
+fAin = 'chem_dummy_test4.ncdf'
 init_eq = f
 fcoeffnine = 'tsai2025/coeff9_NASA_sc.dat'
 fAeqout  = 'TEST4a_atmo_chem_eq.ncdf'

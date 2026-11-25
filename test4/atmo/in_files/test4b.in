@@ -1,31 +1,37 @@
 &UNITS
 /
 
-&PARAM
+&PARAM 
+Debug  = 0
+fin = 'None'
 /
 
-&EOS
-gamma = 0.
-/
+&EOS gamma = 0./
 
-&GRID
+&GRID 
+logg   = 3.33
 ndepth = 1
-pmin = 100
-pmax = 100
-teff = 2000.
+pmin = 1e-3
+pmax = 1e-3
+Teff = 800.
+isothermal = t
 mixing = f
+kzzcst = 0
+
+corr_k = t
 /
 
-&CHEMISTRY
-chem  = 'neq'
-fAin = 'start_conditions.ncdf'
+&CHEMISTRY 
+chem  = 'neq' 
+fAin = 'chem_dummy_test4.ncdf'
 init_eq = f
 fcoeffnine = 'tsai2025/coeff9_NASA_sc.dat'
-fAeqout  = 'TEST4a_atmo_chem_eq.ncdf'
-fAneqout = 'TEST4a_atmo_chem_neq.ncdf'
+fAeqout  = 'TEST4b_atmo_chem_eq.ncdf'
+fAneqout = 'TEST4b_atmo_chem_neq.ncdf'
 ele_xfactor(2) = 1.047120419
 ele_xfactor(3) = 1.264902128
 ele_xfactor(5) = 1.390240512
+mdh = 0.
 print_chem = t
 /
 
@@ -36,18 +42,24 @@ nmol_neq = 91
 mod_jac = 100
 mod_rate = 100
 tmin = 1e2
-dtmax = 1e10
-tmax = 1e20
+dtmax = 1e12
+tmax = 1e17
 /
 
-&RADTRANS
+&RADTRANS 
+rstar = 0.805 
+rorbit = 0.03142
+fred = 1.0
+murad = 0.5
 /
 
-&OPACITY
+
+&OPACITY 
 /
 
-&SOLVER
+&SOLVER 
+/
+ 
+&CONVECTION 
 /
 
-&CONVECTION
-/
